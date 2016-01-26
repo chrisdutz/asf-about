@@ -1,483 +1,299 @@
 include::_settings.adoc[]
-:presenter_name: Hendrik Saly
+:presenter_name: Achim Nierbeck
 :presenter_company: codecentric AG
-:presenter_twitter: hendrikdev22
-:presenter_email: salyh@apache.org
+:presenter_twitter: ANierbeck
+:presenter_email: anierbeck@apache.org
 //CC LICENSE
 //:copyright: by
 :copyright: by-sa
 
-= *Johnzon* - Apache's{nbsp}Upcoming JSON Library
+= *Apache Software Foundation* - more than software
 {presenter_name}, {presenter_company}
 
-//Johnzon is the Apache implementation for JSR-353 (JSONP) and currently under incubation.
-//
-//But wait, Johnzon is more than that. It's also JSON Java Mapper with full data binding and a JAX-RS provider.
-//
-//In this presentation, Hendrik Saly will discuss the current state of the library,
-//the features and the outlook. We'll also look on performance aspects and benchmarks against other JSON libraries.
-//
-//The outlook will focus especially on JSR-367 (JSON Binding) and JSR-374 (Update of JSR-353) because both specs 
-//will be implemented into Johnzon and Hendrik is a member of both expert groups and can give some insights on that.
-//
+//-------------------------------------------------------------------------------------
+//hidden title
+== !
+
+// image::attention.png[width=120,align=left]
+WARNING: Views are my own and don't reflect the views of the Apache Software Foundation or codecentric.
 
 
 //-------------------------------------------------------------------------------------
-== About the Apache Incubator
-"The Incubator project is the entry path into The Apache Software Foundation (ASF) for projects and codebases 
-wishing to become part of the Foundation's efforts." (http://incubator.apache.org/)
+== !
 
-The Apache Incubator has two primary goals:
+image::asf_logo.png[align=right]
 
-* Ensure all donations are in accordance with the ASF legal standards
-* Develop new communities that adhere to our guiding principles
+* What is?
+* How does it work?
+* Who does it?
+* What about Projects?
 
 
 //-------------------------------------------------------------------------------------
-== What is Johnzon?
+== What is the ASF?
 
-* Lightweight JSON library written in Java
-* Core < 90k, 200k for the whole library
-* No external dependencies
-* Implementation of JSR-353
-* Apache 2 License
+* ASF == The Apache Software Foundation
+* Non-profit corporation
+* 501(c)3 charity
+* Volunteer organization
+* Virtual world-wide organization
+* Exists to provide the organizational, legal and financial support for various OSS projects
 
-image::johnzon_logo.png[width=250,align=right]
 
+//-------------------------------------------------------------------------------------
+== The Apache Group
+
+image::apache_8.png[250,250,float="right",align="center"]
+* Before the ASF there was “The Apache Group”
+* Informal corporate structure
+* 8 members
+* Resumed work on NCSA httpd in Feb. 1995
+* Choose permissive licensing
+
+== The ASF
+
+[cols="2"]
+|===
+
+| Then
+| Now
+
+.^a|* Incorporated in 1999
+* Started with 21 members
+* 2 projects
+* All servers and services donated
+.^a| * 675 members
+* 168 TLPs
+* 112 subprojects
+* 47 Incubator podlings
+* Tons of committers (literally)
+** ~ 4500 committers,
+** ~ 2150 PMC members,
+** ~ 6900 signed ICLAs
+* Very large and growing infrastructure
+
+|===
+
+//-------------------------------------------------------------------------------------
+[data-background="images/projects_1.png"]
+== !
+
+//-------------------------------------------------------------------------------------
+[data-background="images/projects_2.png"]
+== !
+
+//-------------------------------------------------------------------------------------
+[data-background="images/projects_3.png"]
+== !
+
+//-------------------------------------------------------------------------------------
+== The mission
+
+* Provide a means for individual volunteers to be sheltered from legal suits directed at the Foundation’s project
+* Protect the ‘Apache’ brand, as applied to its software products, from being abused by other organizations
+* Provide legal and technical infrastructure for open source software development and to perform appropriate oversight of such software
 
 [NOTE.speaker]
 --
-JEE, Java SE
+* Legal protection
+* Brand protection
+* Get out of your way so that you can develop software
 --
 
 //-------------------------------------------------------------------------------------
-== What is Johnzon? (cont.)
+== Vision
 
-//but not yet certified due to TCK are not accessible by Apache yet +
-
-* Contains also modules which are not defined in JSR-353
-** Object mapper
-** JAX-RS provider
-** Websocket (JSR-356) integration (beta)
-** JSON DSL for mutating documents comfortably (beta)
-
-//-------------------------------------------------------------------------------------
-== Status of the project
-
-* Small but engaged, responsive and friendly community
-* Stable and production ready
-* Performance for Johnzon core is quite well
-* Currently incubating within the Apache Incubator
-** and looking for new community members
-** low entrance barrier
-* Plan is to graduate soon (start this year)
-
-//-------------------------------------------------------------------------------------
-== Roadmap
-
-* Implement JSR-367 (API for JSON Binding/JSON-B)
-* Implement JSR-374 (Update of JSR-353)
-* Performance enhancements
-* Increase test coverage
-* JEE certification (once TCK available)
-
-
-//-------------------------------------------------------------------------------------
-== Current users of Johnzon
-
-* Apache TomEE 2
-* Apache Tamaya
-* Apache Decanter
-
-[data-background="images/cc/codecentric-green-background-16x9.png"]
-== JSR
-
-The spec part
-
-//-------------------------------------------------------------------------------------
-== What is a JSR
-
-* JSR -> Java Specification Request
-* A formal standardization process
-* Community involved
-* Controlled by Oracle within the Java community process (JCP)
-
-//-------------------------------------------------------------------------------------
-== JSR-353 Basics
-
-* Can be used standalone or within a JEE container
-* Provides a streaming API as well as a "Tree Model" API for parsing
-* Generator API for generating valid JSON streams
-
-//-------------------------------------------------------------------------------------
-== Streaming API
-
-* Pull parser, parse JSON files of any size
-* Encoding autodetection
-
-[source, java]
-----
-JsonParser parser = Json.createParser(new FileReader("file.json"));
-while(parser.hasNext() {
-    Event event = parser.next();
-    if(event == Event.VALUE_STRING) {
-    	System.out.println(parser.getString());
-    }
-}
-----
-
-== Encoding autodetection
-
-* RFC 4627 Chapter 3
-* "JSON text SHALL be encoded in Unicode"
-* First two character are always ASCII
-* So we can use this matrix to detect encoding:
-
-[source]
-----
-00 00 00 xx  UTF-32BE
-00 xx 00 xx  UTF-16BE
-xx 00 00 00  UTF-32LE
-xx 00 xx 00  UTF-16LE
-xx xx xx xx  UTF-8
-----
-
-(Johnzon does also handle octet-streams with BOM's correctly)
-
-//-------------------------------------------------------------------------------------
-== "Tree Model" API
-
-* Parse JSON to immutable object tree
-* Caution: All in-memory
-
-[source, java]
-----
-JsonReader reader = Json.createReader(new StringReader("[]"));
-JsonArray array = reader.readArray();
-System.out.println(array.isEmpty());
-System.out.println(array.get(0));
-jsonReader.close();
-----
-//-------------------------------------------------------------------------------------
-== Generator API
-
-* Write JSON "value by value" into a byte/char stream
-
-[source, java]
-----
-Writer writer = ...;
-JsonGenerator generator = Json.createGenerator(writer);
-generator
-     .writeStartObject()
-         .write("firstName", "Mister")
-         .write("lastName", "Spock")
-         .write("age", 99)
-         .writeStartObject("address")
-             .write("streetAddress", "Kolinahr Street 1")
-             .write("city", "Vulcan City")
-             .write("state", "VU")
-             .write("postalCode", "1701")
-         .writeEnd()
-     .writeEnd();
-generator.close();
-----
-
-//-------------------------------------------------------------------------------------
-== Writer API
-
-* Write the "Tree Model" back into a byte/char stream
-
-[source, java]
-----
-Outputstream out = ...;
-JsonObject jo = ...;
-JsonWriter jsonWriter = Json.createWriter(out);
-jsonWriter.writeObject(jo);
-jsonWriter.close();
-----
-
-//-------------------------------------------------------------------------------------
-== Configuration
-
-* Key-Value based
-* Implementation dependent
-* Via factories
-
-[source, java]
-----
-final JsonReader reader = Json.createReaderFactory(new HashMap<String, Object>() {
-            put("org.apache.johnzon.supports-comments", true);
-        }).createReader(...);
-JsonParser generator = Json.createGeneratorFactory();
-JsonGenerator generator = Json.createGeneratorFactory();
-----
-
-[data-background="images/cc/codecentric-green-background-16x9.png"]
-== Johnzon
-
-in particular
-
-
-
-//-------------------------------------------------------------------------------------
-== Johnzon *non* JSR-353 Features
-
-* Comments (single line/multiline)
-* Configurable buffer sizes
-* Different buffer reuse strategies
-** QUEUE - char[] are reused by ConcurrentLinkedQueue (default)
-** BY_INSTANCE - char[] are not reused
-** SINGLETON - char[] are reused by only one global char[]
-** THREAD_LOCAL - char[] are reused by thread (every thread does have its char[] buffer bound to a thread local)
-
-== The "Mapper"
-
-* JSON<-->Java Binding
-* Used by JAX RS provider/Websocket module
-* Supports
-** Custom de-/serializers
-** Proper handling of collections and generics
-** @JohnzonConverter and @JohnzonIgnore annotations
-** Works with fields, getter/setter or both
-** Configurable null/empty handling
-** Configurable byte[] handling
-
-
-== The "Mapper" (cont.)
-
-[source, java]
-----
-final static Mapper mapper = new MapperBuilder().build();
-MyObject myObj = ...;
-mapper.writeObject(myObj, outputStream);
-MyObject myObj2 = mapper.readObject(inputStream, MyObject.class);
-----
-
-(Yet some missing default datatypes for Java SE 8 like java.time.*)
-
-== The "Mapper" (cont.)
-
-* Works mostly hassle free
-* Will be aligned with JSON-B Spec (JSR-367)
-* Need some performance tuning
-
-== JAX-RS Provider
-
-[source, xml]
-----
-<Service id="johnzon" 
-         class-name="org.apache.johnzon.jaxrs.ConfigurableJohnzonProvider">
-    ignores = com.foo.MyType,com.foo.MyOtherType
-    accessMode = method
-    supportHiddenAccess = true
-    doCloseOnStreams = false
-    version = 2
-    skipNull = true
-    skipEmptyArray = true
-</Service>
-----
-
-== Websockets
-
-* Since Johnzon 0.8 there is a Websocket/JSR-356 integration
-* JSON as payload format for WebSocket messages
-* https://rmannibucau.wordpress.com/2015/03/24/json-and-websocket-johnzon-to-the-rescue/
-
-== Websockets (cont.)
-
-Server
-[source, java]
-----
-@ServerEndpoint(value = "/server", encoders = JohnzonTextEncoder.class, 
-                                   decoders = JohnzonTextDecoder.class)
-public class MyServerEndpoint {
-    // same as before
-}
-----
-
-Client
-[source, java]
-----
-public class MessageDecoder extends JohnzonTextDecoder {
-    public MessageDecoder() {
-        super(Message.class);
-    }
-}
-// and used like:
-@ClientEndpoint(encoders = JohnzonTextEncoder.class, decoders = MessageDecoder.class)
-public class ClientEndpointImpl {
-    // ...
-}
-----
-
-== Johnzon DSL
-
-* Upcoming with Johnzon 2
-* Mutable and navigable JSON Structure
-* Fluent API
-
-== Johnzon DSL (cont.)
-
-* Looks like:
-
-[source, java]
-----
-JsonObject jo = ...;
-MutableJsonStructure ms = MutableJsonStructureFactory.toMutableJsonStructure(jo);
-assertNotSame(ms, ms.copy());
-assertFalse(ms.isLeaf("address"));
-assertFalse(ms.isLeafNull("firstName"));
-assertTrue(ms.exists("phoneNumber"));
-assertEquals(1, ms.get("phoneNumber").get(1).getAncestor().getIndex());
-assertNull(ms.getParent());
-assertEquals("Smith", ms.getLeafAsString("lastName"));
-assertEquals("NY", ms.get("address").getLeafAsString("state"));
-assertEquals(5, ms.getKeys().size());
-assertEquals(5, ms.size());
-assertEquals(4, ms.get("address").size());
-ms.add("additionalAddress", ms.get("address").copy().remove("city").set("state", "CA"));
-ms.set(ms.copy().remove("phoneNumber"));
-assertEquals(5, ms.size());
-JsonObject modJo = (JsonObject) ms.toJsonStructure();
-----
-
-//-------------------------------------------------------------------------------------
-== Benchmark
-* JMH based benchmark suite
-* Bytes, Chars (UTF-8/UTF-16)
-* Measurements
-** Parse Only
-** Read to "Tree Model"
-** Generate JSON
-** Serialize
-** Deserialize
+The Apache Software Foundation provides support for the Apache community of open-source software projects. The Apache projects are characterized by a collaborative, consensus based development process, an open and pragmatic software license, and a desire to create high quality software that leads the way in its field. We consider ourselves not simply a group of projects sharing a server, but rather a community of developers and users.
 
 [NOTE.speaker]
 --
-Not included within Apache Scope because of JMH licensing issue
+Consensus-based development - community-created
+High quality software - Code should be exceptional
+--
+
+== Legal Structure
+
+* Member-based corporation - individuals, not companies, can be members
+* Members nominate and elect new members
+* Members elect a board - 9 seats
+* Annual members meetings via IRC. Board meets monthly.
+* Each PMC has a Chair - eyes and ears of the board (oversight only)
+
+NOTE: The ASF is a legal entity - a non-profit - and must conduct itself according to certain laws and bylaws.
+
+//-------------------------------------------------------------------------------------
+
+[data-background="images/asf_org.png"]
+== !
+
+//image::asf_org.png[ASF-Organisation]
+
+//-------------------------------------------------------------------------------------
+
+[data-background="images/apache_heatMap_background_dark.png"]
+== *How does it work*
+
+The Apache Way
+
+//-------------------------------------------------------------------------------------
+
+== The Apache Way ...
+
+* A method of developing software
+* A method of running communities
+* A method of governing a Foundation
+
+== *The Apache Way* - Why the ASF Works
+
+* Meritocracy
+* Transparency
+* Community
+
+[NOTE.speaker]
+--
+Our approach is based on three pillars, often referred to as “The Apache Way”:
+
+Meritocracy - Individuals come to our projects as individuals, and grow the community’s trust and appreciation by what they do and how they do it.
+
+Transparency - Our projects are developed and evolved in the open, ensuring that everyone that wants to contribute is able to.
+
+Community - We believe that great software is an emergent property of great communities, and therefore place community health over all else.
+--
+
+== The Results
+
+* Vendor Neutrality
+* Diversity
+* Trusted
+* Safe
+
+[NOTE.speaker]
+--
+Our focus on Meritocracy, Transparency and Community results in:
+
+Vendor Neutrality - We are a natural meeting place for competitors to collaborate together on shared goals.
+Diversity - Our flexible model of governance lets projects evolve independently, yet ensures they remain independent and diverse communities.
+Trusted - We are trusted by organizations around the globe to serve as a home for their more important software projects.
+Safe - Our governance model, intellectual property processes and licensing framework provide a safe environment for contributors and users alike.
+--
+
+//[data-background="images/stairs.png"]
+== Merit
+
+image::stairs.png[Merit, width="300", float="right", align="center"]
+
+* Any constructive contribution earns merit
+* Not just code
+* Evangelism
+* Bug reports and triage
+* Testing
+* Documentation
+* Design feedback
+* User support
+* Etc.
+
+
+//-------------------------------------------------------------------------------------
+//[data-background="images/cc/codecentric-green-background-16x9.png"]
+//-------------------------------------------------------------------------------------
+
+== Community > Code
+
+* Since we are all volunteers, people’s time and interests change
+* A healthy community is “warm and inviting” and encourages a continued influx of developers as others leave
+* Poisonous people/communities turn people off, and the project will die
+* End result - better code, long-term code
+
+[NOTE.speaker]
+--
+One of our sayings is "Community > Code", which is shorthand for saying that the community actually matters more than
+the code itself. A sustainable community leads to code you can depend on, but good code, all by itself, isn't sustainable,
+because the world changes around you.
+--
+
+//[data-background="images/dice.png"]
+== Consensus-based decisions
+
+image::dice.png[Dice]
+
+[NOTE.speaker]
+--
+voting
++1 - yes
++0 - no real comment
+-1 - veto
+Also, -0, -0.5, +0.5, etc... to indicate non-binding opinions
+--
+
+== Collaborative Development
+
+* Code is developed by the community
+* Voting ensures at least 3 active developers
+* Time requirement on votes ensures representation across many timezones
+* Development done online and on-list - If it didn’t happen on-list, it didn’t happen
+
+[NOTE.speaker]
+--
+If you don't have enough people to vote on releases, then that's a leading indicator
+that something is seriously wrong with the project, and something needs to change.
+--
+
+== If it didn't happen on the mailing list ...
+
+* All decisions must be done in the open
+* Private discussions happen - bring it back to the list!
+* Provide time for feedback from those that weren't there
+
+== Ways to Contribute
+
+* Documentation, Tutorials and Examples
+* Helping others with queries and questions
+* Issue / bug tracker triage
+* Testing new fixes, helping reproduce problems
+
+== Ways to Contribute
+
+* Bug Fixes and New Features
+* Writing add-ons and extensions
+* Mentoring, volunteering for the Foundation
+* Sponsorship
+
+== How companies can contribute
+
+* You can allow your employees to participate
+* You can sponsor the foundation financially
+* You can donate your useful code to the foundation, so the whole world can benefit
+
+[NOTE.speaker]
+--
+No corporate memberships. You are not buying influence.
 --
 
 //-------------------------------------------------------------------------------------
-== Benchmark (cont.)
 
-* Small size JSON
+== !
 
-image::parseOnly1kChars.jpg[]
-
-//-------------------------------------------------------------------------------------
-== Benchmark (cont.)
-
-* Medium size JSON (byte stream)
-
-image::read1000kBytes.jpg[]
+image::ASFbudget.png[Budget]
 
 //-------------------------------------------------------------------------------------
-== Benchmark (cont.)
 
-* Medium size JSON (character stream)
+== !
 
-image::read1000kChars.jpg[]
-
-//-------------------------------------------------------------------------------------
-== Benchmark (cont.)
-
-* Serialize simple Java Object
-
-image::serializeSimpleBytes.jpg[]
+image::ASFbudget2.png[Budget2]
 
 //-------------------------------------------------------------------------------------
-== Testcoverage
-
-* Approx. 74%  testcoverage yet
-* We want to get above 90%
-* https://coveralls.io/github/salyh/incubator-johnzon
-
-[data-background="images/cc/codecentric-green-background-16x9.png"]
-== Upcoming
-
-The new JSON JSR Specs
-
-
-//-------------------------------------------------------------------------------------
-== JSR-374 (JSON-P 1.1)
-
-* RFC 7159 (update of RFC 4627)
-* Java SE 8
-* Json Pointer (RFC 6901)
-* Json Patch (RFC 6902)
-* Json Merge Patch (RFC 7396)
-* Mutable "Tree Model"
-* Currently EDR (Early draft review)
-
-//-------------------------------------------------------------------------------------
-== JSR-367 (JSON-B 1.0)
-
-* Java standard for JSON<->Java Binding
-* Java SE 8
-* Integrates with JSR-353/374
-* Currently EDR (Early draft review)
-
-== JSR-367 (JSON-B 1.0) (cont.)
-
-[source, java]
-----
-Jsonb jsonb = JsonbBuilder.create();
-Book book = jsonb.fromJson(new File("jsonfile.json"), Book.class);
-----
-
-
-[data-background="images/cc/codecentric-green-background-16x9.png"]
-== Getting started
-
-and involved
-
-//-------------------------------------------------------------------------------------
-== Get it
-
-from maven central
-[source, xml]
-----
-<dependency>
-  <groupId>org.apache.johnzon</groupId>
-  <artifactId>johnzon-core</artifactId>
-  <version>0.9.1-incubating</version>
-</dependency>
-
-<dependency>
-  <groupId>org.apache.geronimo.specs</groupId>
-  <artifactId>geronimo-json_1.0_spec</artifactId>
-  <version>1.0-alpha-1</version>
-  <scope>provided</scope> <!-- or compile if your environment doesn't provide it -->
-</dependency>
-----
-
-or download from http://www.eu.apache.org/dist/incubator/johnzon/
-
-//-------------------------------------------------------------------------------------
-== Where to go from here
-
-* http://incubator.apache.org/projects/johnzon.html
-* mailto:dev-subscribe@johnzon.incubator.apache.org[Subscribe to the dev mailing list]
-* https://github.com/salyh/jsr353-benchmark
-* https://github.com/apache/incubator-johnzon/tree/jsr374_367
-* https://www.jcp.org/en/jsr/detail?id=353
-* https://www.jcp.org/en/jsr/detail?id=374
-* https://www.jcp.org/en/jsr/detail?id=367
-
-//-------------------------------------------------------------------------------------
-== Consider to join the project if you are
-
-* a (Java) developer looking to get involved within ASF
-* interested in implementing standards
-* doing JSON the whole day
-* looking for a great community to engage with
-
-//-------------------------------------------------------------------------------------
-== Github
-
-* https://github.com/apache/incubator-johnzon
-* We accept Pull Requests
+//== Where to go from here
+//
+//* https://github.com/rbowen/presentations/blob/master/apache_way/slides.md
 
 // --------------------------------------------------------------------------
+
+== Lighning Talks (10min each)
+
+* Apache Commons
+* Apache Flex
+* Apache Jonson (Incubator)
+* Apache Karaf
+
 // --------------------------------------------------------------------------
 include::slides/qa.adoc[]

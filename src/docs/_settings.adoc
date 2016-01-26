@@ -8,9 +8,9 @@
 :revealjs_progress: true
 :revealjs_slidenumber: true
 :pdf-page-size: A4
-:revealjs_center: false 
+:revealjs_center: false
 :revealjs_history: true
-//:icons: font
+:icons: font
 :imagesdir: images
 :title-slide-background-image: cc/codecentric-title-background-16x9.png
 :idprefix:
