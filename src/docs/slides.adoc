@@ -1,5 +1,5 @@
 include::_settings.adoc[]
-:presenter_name: Achim Nierbeck
+:presenter_name: Achim Nierbeck, Hendrik Saly, Christofer Dutz, Benedikt Ritter
 :presenter_company: codecentric AG
 :presenter_twitter: ANierbeck
 :presenter_email: anierbeck@apache.org
@@ -92,6 +92,9 @@ image::apache_8.png[250,250,float="right",align="center"]
 * Provide a means for individual volunteers to be sheltered from legal suits directed at the Foundation’s project
 * Protect the ‘Apache’ brand, as applied to its software products, from being abused by other organizations
 * Provide legal and technical infrastructure for open source software development and to perform appropriate oversight of such software
+
+* provide software for the public good
+
 
 [NOTE.speaker]
 --
@@ -292,7 +295,7 @@ image::ASFbudget2.png[Budget2]
 
 * Apache Commons
 * Apache Flex
-* Apache Jonson (Incubator)
+* Apache Jonzon (Incubator)
 * Apache Karaf
 
 // --------------------------------------------------------------------------
