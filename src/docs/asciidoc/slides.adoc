@@ -1,0 +1,401 @@
+include::_settings.adoc[]
+:presenter_name: Achim Nierbeck, Hendrik Saly, Christofer Dutz, Benedikt Ritter
+:presenter_company: codecentric AG
+
+= Apache Software Foundation - mehr als nur Software
+{presenter_name}, {presenter_company}
+
+== Disclaimer
+
+WARNING: Die Informationen auf dieser Präsentation spiegelt die Meinung der Autoren wider und nicht zwangsläufig die der Apache Software Foundation oder codecentic.
+
+== !
+
+image::asf_logo.png[]
+
+* Was ist die ASF?
+* Wie ist sie aufgebaut?
+* Wie funktioniert sie?
+
+== Was ist die ASF?
+
+* ASF == The Apache Software Foundation
+* Gemeinnützige Gesellschaft
+* Amerikanische 501(c)3 charity
+* Gesellschaft Freiwilliger
+* Virtuelle, weltumspannende Organisation
+* Liefert organisatorische, legale und finanzielle Unterstütuung für eine Vielzahl von Open-Source Projekten
+
+== Die Apache Group
+
+image::apache_8.png[250,250,float="right",align="center"]
+* Vor der ASF gab es die “Apache Group”
+* Informale Gesellschaftsstruktur
+* 8 Mitglieder
+* Setzen im Feb. 1995 die Arbeit am NCSA *httpd* fort
+* Wählten sehr tollerante Lizenzierung
+
+[NOTE.speaker]
+--
+* httpd : Auch Apache Webserver genannt
+--
+
+== Wachstum
+
+[cols="2"]
+|===
+
+| Damals (1999)
+| Heute (04.2016)
+
+.^a|* 21 Mitglieder
+* 2 Projekte
+* Alle Server und Dienste gespendet
+.^a| * 619 Mitglieder
+* 326 (Top Level) Projekte
+* 4979 Committer,
+* 7858 Unterschriebene ICLAs
+* Eigene Infrastruktur
+
+|===
+
+[NOTE.speaker]
+--
+* ICLA: Individual Contributor License Agreement
+* CCLA: Corporate Contributor License Agreement
+* 57 Incubator Podlings
+* Große und eigene Infrastruktur, ständig kommen neue Dienste/Server dazu
+--
+
+[data-background="images/projects_1.png"]
+== !
+
+[data-background="images/projects_2.png"]
+== !
+
+[data-background="images/projects_3.png"]
+== !
+
+== Comitter Zahlen
+image::comitters.png[]
+
+== Sprachen
+image::languages.png[]
+
+== Categorien
+image::categories.png[]
+
+== Die Mission
+
+* Bereitstellen aller Mittel um jeden einzelnen Freiwilligen vor Verfolgung der Justiz zu beschützen, sofern diese gegen ein Projekt der Foundation gerichtet ist
+* Schützen der Marke: *Apache* und deren Software-Produkte gegen Mißbrauch durch andere Organisationen
+* Bereitstellen der juristischen und technischen Infrastruktur für Open-Source Software-Entwicklung sowie die Betreuung selbiger
+
+* [red]*provide software for the public good*
+* Her-/Bereitstellen gemeinnütziger Software
+
+[NOTE.speaker]
+--
+* Get out of your way so that you can develop software
+--
+
+== Vision
+
+The Apache Software Foundation provides support for the Apache community of open-source software projects. The Apache
+projects are characterized by a [red]*collaborative*, [red]*consensus based* development process, an [red]*open* and
+pragmatic software license, and a desire to create [red]*high quality* software that leads the way in its field. We
+consider ourselves not simply a group of projects sharing a server, but rather a
+[red]*community of developers and users*.
+
+[NOTE.speaker]
+--
+Consensus-based development - community-created
+High quality software - Code should be exceptional
+--
+
+== Projekte
+
+* Herz der ASF sind die Projekte
+* Auch "Top Level Projekte" (TLP) genannt
+* ASF liefert Dienste:
+** Mailinglisten, SCM Repositories (SVN, Git, ...)
+** Bug & Issue Tracker (Jira, ...), Wiki (Confluence, ...)
+** CI Server (Jenkins), Webserver für Projekt-Sites
+** ...
+
+== Lebenszyklus eines Projektes
+
+[ditaa,diagram-project-lifecycle]
+....
+     +---------------------+
+     |                     |
++--->+ Apache Labs         |
+     |                     |
+     +----------+----------+
+                |
+                v
+     +----------+----------+
+     |                     |
++--->+ Apache Incubator    |
+     |                     |
+     +----------+----------+
+                |
+                v
+     +----------+----------+
+     |                     |
+     | Apache TLP          |
+     |                     |
+     +----------+----------+
+                |
+                v
+     +----------+----------+
+     |                     |
+     | Retired Project     |
+     |                     |
+     +---------------------+
+....
+
+[NOTE.speaker]
+--
+* Aufnahme in die ASF nur über Labs / Incubator
+* "Labs" eher für Experimente ohne jegliche Community
+* Übergang in Incubator sowie ein rudimentäre Community etabliert wurde
+* "Incubator" ist Zone um Community zu entwickeln und Prozesse zu lernen
+* Graduation zu Top Level Project nachdem die Community bestätigt hat eine Community zu haben und die Prozesse eines TLP zu beherrschen
+* Projekte ohne aktivität können "in Rente gehen", üblicherweise ein letztes Release, Archivierung
+--
+
+== Aufbau eines Projektes
+
+image::project-pyramid.png[]
+
+[NOTE.speaker]
+--
+* Users: Benutzer des Projektes
+* Contributors: Personen, die eine ICLA unterschrieben haben und Inhalte in Form von Patches beisteuern.
+* Comitter: Personen, mit der Berechtigung Änderungen direkt vorzunehmen
+* PMC: Personen, die Stimmberechtigt sind
+* Chair: Vorsitzender des Projekts (formale Rolle)
+
+* Aufstieg üblicherweise durch kontinuierliches Engagement
+* Aufstieg immer durch Wahl der PMCs
+* Chair hat nicht mehr Stimmrecht als jeder andere PMC
+* Chair ist Schnittstelle zum formalen Herz der Foundation, dem Board
+--
+
+== Aufbau der ASF
+
+* Mitgliedebasierte Gesellschaft - Einzelpersonen können Mitglied werden, keine Firmen
+* Mitglieder nominieren und wählen neue Mitglieder
+* Mitglieder wählen Gremium - Das sogenannte [red]*Board* - mit 9 Sitzen
+* Jährliche Mitgliederversammlung via IRC. Das Board trifft sich monatlich.
+* Jedes Projekt hat einen sog. [red]*Chair* als Schnittstelle zum Board (Aufsichtsrolle)
+
+[NOTE.speaker]
+--
+Die ASF is eine a gemeinnützige juristische Einheit und unterliegt damit gewissen Gesetzen und Vorschriften.
+--
+
+[data-background="images/asf-structure.png"]
+== !
+
+[NOTE.speaker]
+--
+* PMC -> Board Report: In der regel vom Project Chair vorbereitet und abgeliefert
+* Board -> PMC Create,...: Die PMCs wählen neue PMCs und Comitter, werden aber vom Board oder deren Officers dazu gemacht
+--
+
+== Funktionsweise der ASF?
+
+* [red]*The Apache Way*
+** Eine Methode um Software zu Entwickeln
+** Eine Methode um Communities zu betreiben
+** Eine Methode um eine Gesellschaft zu führen
+
+== Warum funktioniert sie?
+
+* Meritocracy: Leistungsgemeinschaft - Aufstieg durch Leistung/Engagement
+* Transparency: Transparenz - Nichts geschieht im Verborgenen
+* Community: Gemeinschaft - Zusammen sind wir stark
+
+[NOTE.speaker]
+--
+Meritocracy - Individuen kommen in die Projekte und wachsen durch ihre Tätigkeiten und Engagement in die Gemeinschaft hinein.
+Transparency - Unsere Projekte werden in aller Öffentlichkeit entwickelt, das stellt sicher, dass jeder, der sich beteiligen will, dazu auch die Möglichkeit erhält.
+Community - Wir glauben, dass großartige Software in direktem Zusammenhang steht mit großartiger Gemeinschaft. Daher wird der Schutz der Gemeinschft in der ASF über alles andere gestellt.
+--
+
+== Das Ergebnis
+
+* Herstellerunabhängigkeit
+* Diversität
+* Vertrauen
+* Sicherheit
+
+[NOTE.speaker]
+--
+Our focus on Meritocracy, Transparency and Community results in:
+
+Vendor Neutrality - We are a natural meeting place for competitors to collaborate together on shared goals.
+Diversity - Our flexible model of governance lets projects evolve independently, yet ensures they remain independent
+and diverse communities.
+Trusted - We are trusted by organizations around the globe to serve as a home for their more important software
+projects.
+Safe - Our governance model, intellectual property processes and licensing framework provide a safe environment for
+contributors and users alike.
+--
+
+== Merit / Verdienst
+
+[ditaa,asciidoctor-diagram-meritflow]
+....
+                               |
+ Project                       |                   Foundation
+                               |
++---------------------+        |
+|                     |        |
+| User                |        |
+|                     |        |
++----------+----------+        |
+           | contributes       |
+           v                   |
++----------+----------+        |
+|                     |        |
+| Bugreporter/-fixer  |        |
+|                     |        |
++----------+----------+        |
+           | elected by PMC    |
+           v                   |
++----------+----------+        |
+|                     |        |
+| Project Committer   |        |
+|                     |        |
++----------+----------+        |
+           | elected by PMC    |
+           v                   |
++----------+----------+        |        +---------------------+
+|                     |        |        |                     |
+| Project PMC         +---------------->+ ASF Member          |
+|                     |    nominated    |                     |
++----------+----------+    by Members   +-----------+---------+
+           | elected by PMC    |                    | elected by Members
+           v                   |                    v
++----------+----------+        |        +-----------+---------+
+|                     |        |        |                     |
+| Project Chair       +---------------->+ Board Member        |
+|                     |    oversight    |                     |
++---------------------+        |        +---------------------+
+                               |
+....
+
+[NOTE.speaker]
+--
+* Jeder konstruktiver Beitrag zählt
+* Nicht nur Code
+* Evangelism: Blogs, Vorträge, ...
+* Melden von Fehlern
+* Testen
+* Dokumentation
+* Design Feedback
+* User Unterstützung (z.B. auf Mailinglisten)
+* Etc.
+--
+
+== Community over Code
+
+* Wir sind alle Freiwillige, daher ändert sich unsere verfügbare Zeit und unsere Interessen
+* Eine gesunde Gemeinschaft ermuntert neue Mitglieder
+* Es ist durchaus normal, dass Mitglieder die Gemeinschaft (vorrübergehend) verlassen
+* [red]*Poisonous people* verschrecken andere und müssen bekämpft werden
+* Endergebnis - besserer Code, langlebiger code
+
+[NOTE.speaker]
+--
+Eine unserer Gurundaussagen ist "Community over Code", was nichts anderes bedeutet, dass die Gemeinschaft wichtiger ist
+als der Code selbst. Eine nachhaltige Gemeinschaft führt zu Code, auf den man sich verlassen kann. Code ohne Gemeinschaft
+dagegen ist nicht nachhaltig, da man nie weiß, wie sich die Umstände des/der Entwickler ändern.
+--
+
+== Konsens basierte Entscheidungen
+
+* PMCs haben [red]*binding votes* (bindende Stimmen)
+* nicht-PMCs haben [red]*non-binding votes* (nicht bindende Stimmen)
+* Bei Abstimmungen zählen nur die +binding votes+
+* *Aber* +non-binding votes+ finden dennoch berücksichtigung
+* Etwas wird als abgestimmt angesehen, wenn mehr als 3 +binding votes+ mehr mit "+1" gestimmt haben als mit "-1"
+
+[NOTE.speaker]
+--
+* Abgestimmt werden kann mit: +1 (dafür), 0 (unentschlossen oder -1 (dagegen)
+* Bei -1 Stimmen, müssen konstruktiv sein, also entweder begründen warum oder einen besseren Vorschlag machen.
+--
+
+== Gemeinschaftliche Entwicklung
+
+* Code wird Gemeinschaftlich entwickelt
+* Es wird online entwickelt
+* Abstimmungen sorgen dafür dass mindestens 3 aktive entwickler tätig sind
+* Um sicherzustellen, dass alle, über alle Zeitzonen hinweg die Möglichkeit haben abzustimmen, gehen Abstimmungen üblicherweise über 72 Stunden
+* Diskussionen und Abstimmungen gehen ausschließlich über die Mailinglisten
+
+[NOTE.speaker]
+--
+Wenn es nicht genug aktive PMCs gibt um die 3 Stimmen zu erreichen, so ist dies ein absoluter Indikator, dass das
+Projekt in gravierenden Problemen steckt und sich einige Dinge ändern müssen.
+--
+
+== If it didn't happen on-list, it didn't happen
+
+* Wenn es nicht auf der (Mailing)Liste dokumentiert ist, ist es nicht passiert
+* Alle Diskussionen müssen in der Öffentlichkeit stattfinden
+* Private Diskussionen kommen vor, müssen aber ihren Weg zurück zur Mailingliste finden
+* Andere müssen die Gelegenheit bekommen sich zu den Ergebnissen der privaten Diskussion zu äußern
+
+[NOTE.speaker]
+--
+Passiert oft bei Konferenzen, bei denen mehrere Teilnehmer eines Projekts Themen diskutieren.
+--
+
+== Formen des Engagements
+
+* Dokumentation, Tutorials und Beispiele
+* Vorträge (auf Konferenzen)
+* Usergroups
+* (Auf den Mailinglisten) anderen Helfen
+* Erstellen von Bug-Meldungen
+* Testen von Fixes, Unterstützung beim Aufspüren und Analysieren von Bugs
+
+== Formen des Engagements
+
+* Bug Fixes und neue Features
+* Schreiben von Erweiterungen
+* Mentoring, engagement für die Foundation selbst
+
+== Wie können Firmen unterstützen
+
+* Firmen können ihren Mitarbeitern erlauben in ihrer Arbeitszeit an Projekten zu arbeiten
+* Firmen können die Foundation direkt finanziell unterstützen (Sponsor)
+* Firmen können nützlichen Code spenden, sodass die ganze Welt davon profitieren kann
+* Firmen können [red]*nicht* gezielt einzelne Projekte finanziell unterstützen
+
+[NOTE.speaker]
+--
+* Es gibt keine Firmen Mitgliedschaft
+* Es ist nicht möglich Einfluss zu kaufen
+* Der Versuch dies zu tun wird vom Rest der Foundation üblicherweise extrem kritisch beobachtet
+--
+
+== Zahlen und Fakten
+
+image::ASFbudget.png[Budget]
+
+== Zahlen und Fakten
+
+image::ASFbudget2.png[Budget2]
+
+== Lightning Talks (ja ca. 10min)
+
+* Apache Commons
+* Apache FlexJS
+* Apache Jonzon (Incubator)
+* Apache Karaf
