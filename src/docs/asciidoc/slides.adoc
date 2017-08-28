@@ -67,14 +67,17 @@ image::apache_8.png[250,250,float="right",align="center"]
 * Große und eigene Infrastruktur, ständig kommen neue Dienste/Server dazu
 --
 
-[data-background="images/projects_1.png"]
 == !
 
-[data-background="images/projects_2.png"]
+image::projects_1.png[background, size=cover]
+
 == !
 
-[data-background="images/projects_3.png"]
+image::projects_2.png[background, size=cover]
+
 == !
+
+image::projects_3.png[background, size=cover]
 
 == Comitter Zahlen
 image::comitters.png[]
@@ -196,7 +199,8 @@ image::project-pyramid.png[]
 Die ASF is eine a gemeinnützige juristische Einheit und unterliegt damit gewissen Gesetzen und Vorschriften.
 --
 
-[data-background="images/asf-structure.png"]
+image::asf-structure.png[background, size=cover]
+
 == !
 
 [NOTE.speaker]

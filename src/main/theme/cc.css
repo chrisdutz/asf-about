@@ -268,3 +268,13 @@ body {
 .reveal .red {
   color: red;
 }
+
+/*********************************************
+ * C3JS Charts
+ *********************************************/
+
+.c3 {
+  fill: white;  }
+
+.c3 line, .c3 path {
+  stroke: white !important; }

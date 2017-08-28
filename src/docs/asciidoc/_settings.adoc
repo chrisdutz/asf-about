@@ -3,7 +3,6 @@
 :navigation:
 :status:
 :arrows:
-:source-highlighter: highlightjs
 :revealjs_theme: cc_black
 :revealjs_progress: true
 :revealjs_slidenumber: true
@@ -12,6 +11,7 @@
 :revealjs_history: true
 :icons: font
 :imagesdir: images
-:title-slide-background-image: cc/codecentric-title-background-16x9.png
+:title-slide-background-image: background-dark-orig.jpg
 :idprefix:
 :idseparator: -
+:docinfo: shared
